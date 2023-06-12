@@ -1,18 +1,21 @@
-import css from './ImageGalleryItem.module.css'
-import PropTypes from 'prop-types';
-export const ImageGalleryItem = ({ image, alt, largeImage, handleClick }) => {
-  
-    return (
-        <li className={css.imageGalleryItem} onClick={()=>handleClick(largeImage)}>
-            <img loading="lazy" className={ css.imageGalleryItemImage} src={image} alt={alt} width='360px'/>
-        </li>
-    )
-}
+import css from '../styles.module.css';
 
-ImageGalleryItem.propTypes = {
-    image:PropTypes.string.isRequired,
-    alt:PropTypes.string.isRequired,
-    largeImage:PropTypes.string.isRequired,
-    handleClick:PropTypes.func.isRequired
+export default function ImageGalleryItem({ images, hendleModal }) {
+  return (
+    <>
+      {images &&
+        images.map(image => {
+          return (
+            <li className={css.ImageGalleryItem} key={image.id}>
+              <img
+                className={css.ImageGalleryItemImage}
+                src={image.webformatURL}
+                alt={image.user}
+                onClick={() => hendleModal(image)}
+              />
+            </li>
+          );
+        })}
+    </>
+  );
 }
-

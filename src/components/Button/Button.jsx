@@ -1,12 +1,9 @@
-import css from './Button.module.css'
-import PropTypes from 'prop-types';
-export const Button = ({ onClick, inactiveButton}) => {
-    return(<div className={css.buttonContainer}>
-                <button className={css.button} disabled={inactiveButton} type='button' onClick={onClick}>Load more</button>
-            </div>)
-}
+import css from '../styles.module.css';
 
-Button.propTypes = {
-    onClick:PropTypes.func,
-    inactiveButton:PropTypes.bool
+export default function LoadMore({ onClick }) {
+  return (
+    <button className={css.Button} type="button" onClick={onClick}>
+      Load more
+    </button>
+  );
 }

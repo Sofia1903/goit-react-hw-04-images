@@ -1,59 +1,40 @@
-import React from "react"
-import { useState } from "react";
-import css from './Searchbar.module.css'
-import { BsSearchHeartFill } from "react-icons/bs";
-import PropTypes from 'prop-types';
- import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-  
-export function Searchbar({ onSubmit }) {
-    const [query, setQuery] = useState('')
-    
-    const notify=()=> {
-        toast.dark("Enter text to search, please!", {
-            style:{backgroundColor:'#1b3ff2', fontSize:20}
-        });
-    }
-    
-    const handleChange=(event)=>{
-        setQuery(event.target.value)
+import { useState } from 'react';
+import css from '../styles.module.css';
+
+export default function Serchbar({ onSubmit }) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handelQueryChenge = event => {
+    setSearchQuery(event.currentTarget.value.toLowerCase());
+  };
+
+  const handelSubmit = event => {
+    event.preventDefault();
+
+    if (searchQuery.trim() === '') {
+      return alert('Введите ваш запрос');
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        if (query.trim() === '') {
-          notify()
-            return
-        }
-        onSubmit(query)
-        setQuery('')
-        return 
-    }
+    setSearchQuery('');
+    onSubmit(searchQuery);
+  };
 
-    return <header className={css.searchbar}>
-                 <form className={css.searchForm} onSubmit={handleSubmit}>
-                     <button type="submit" className={css.searchFormButton}>
-                     <BsSearchHeartFill  className={css.searchIcon}/>
-                     </button>
+  return (
+    <header className={css.Searchbar}>
+      <form className={css.SearchForm} onSubmit={handelSubmit}>
+        <button type="submit" className={css.SearchFormButton}>
+          <span className={css.SearchFormButtonLabel}>S</span>
+        </button>
 
-                     <input
-                        className={css.searchFormInput}
-                        type="text"
-                        value={query}
-                        autoComplete="off"
-                        autoFocus
-                        placeholder="Search images and photos"
-                        onChange={handleChange}
-                     />
-                 </form>
-                 <ToastContainer position="bottom-right" closeOnClick />
-            </header>
-} 
-
-
-Searchbar.propTypes = {
-    onSubmit:PropTypes.func.isRequired
+        <input
+          className={css.SearchFormInput}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={handelQueryChenge}
+        />
+      </form>
+    </header>
+  );
 }
-
-
-
